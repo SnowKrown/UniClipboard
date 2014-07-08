@@ -4,7 +4,7 @@ namespace ClipboardHelper
 {
 	internal class AndroidClipboardHelper
 	{
-		private const string PLUGIN_NAME = "com.pp.textClipboard";
+		private const string PLUGIN_NAME = "com.pp.textClipboard.ClipboardAndroid";
 
 		public static void SetClipboard (string exportData)	
 		{
@@ -25,6 +25,12 @@ namespace ClipboardHelper
 				retText = activity.Call <string> ("GetCopyBufferString");
 			}
 			return retText;
+		}
+
+		static void runOnUiThread() 
+		{
+			AndroidJavaClass jc = new AndroidJavaClass(PLUGIN_NAME);
+			jc.CallStatic("GetCopyBufferString");
 		}
 	}
 }

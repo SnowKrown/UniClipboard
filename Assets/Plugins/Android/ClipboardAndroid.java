@@ -8,6 +8,26 @@ import com.unity3d.player.UnityPlayer;
 
 public class ClipboardAndroid
 {
+    static protected void runSafe (final Runnable r)
+	{
+		com.unity3d.player.UnityPlayer.currentActivity.runOnUiThread (new Runnable()
+        {
+			@Override
+			public void run()
+			{
+				try
+				{
+					r.run();
+				} catch (Exception e)
+				{
+					
+				}
+				
+			}
+		});
+	}
+
+    
 	static public String GetCopyBufferString () 
 	{
 		String retText = "";
