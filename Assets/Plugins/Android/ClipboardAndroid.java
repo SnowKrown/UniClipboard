@@ -4,57 +4,34 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ClipboardManager;
 import android.content.ClipData;
-import com.unity3d.player.UnityPlayer;
 
 public class ClipboardAndroid
 {
-    static protected void runSafe (final Runnable r)
-	{
-		com.unity3d.player.UnityPlayer.currentActivity.runOnUiThread (new Runnable()
-        {
-			@Override
-			public void run()
-			{
-				try
-				{
-					r.run();
-				} catch (Exception e)
-				{
-					
-				}
-				
-			}
-		});
-	}
-
+	private static ClipboardManager myClipboard;
+	private static Activity activity;
     
-	static public String GetCopyBufferString () 
+	static public void SetCopyBufferString (final String text)
 	{
-		String retText = "";
-		final Activity activty = com.unity3d.player.UnityPlayer.currentActivity;
-		android.content.ClipboardManager clipboard = (android.content.ClipboardManager) activty.getSystemService(Context.CLIPBOARD_SERVICE);
-		ClipData clip = clipboard.getPrimaryClip();	
-
-		if (clip != null && clip.getItemCount() > 0) 
-		{
-			ClipData.Item item = clip.getItemAt(0);
-			retText = item.getText ().toString ();
-		}
-
-		return retText;
+		Setup ();
+		ClipData myClip;
+		myClip = ClipData.newPlainText("text", text);
+		myClipboard.setPrimaryClip(myClip);
 	}
-
-	static public void SetCopyBufferString (final String text) 
+    
+	static public String GetCopyBufferString ()
 	{
-		runSafe(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				final Activity activity = com.unity3d.player.UnityPlayer.currentActivity;
-				android.content.ClipboardManager clipboard = (android.content.ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
-				clipboard.setPrimaryClip (ClipData.newPlainText(null, text));
-			}
-		});
+		Setup ();
+		ClipData abc = myClipboard.getPrimaryClip();
+		ClipData.Item item = abc.getItemAt (0);
+		return item.getText().toString();
+	}
+	
+	static private void Setup ()
+	{
+		if (activity == null)
+			activity = com.unity3d.player.UnityPlayer.currentActivity;
+		
+		if (myClipboard == null)
+			myClipboard = (ClipboardManager)activity.getSystemService(Context.CLIPBOARD_SERVICE);
 	}
 }
