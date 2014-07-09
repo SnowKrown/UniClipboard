@@ -12,6 +12,8 @@ namespace ClipboardHelper
 			{
 				AndroidJavaClass jc = new AndroidJavaClass (PLUGIN_NAME);
 				jc.CallStatic ("SetCopyBufferString", exportData);
+				Debug.Log ("Set clipboard text " + exportData);
+				Debug.Log ("Java Class is null? " + (jc == null));
 			}
 		}
 

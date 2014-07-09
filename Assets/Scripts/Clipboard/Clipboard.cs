@@ -4,28 +4,28 @@ using ClipboardHelper;
 
 public static class Clipboard
 {
-	public static string value
+	public static string Value
 	{
 		set
 		{
-#if UNITY_IOS && !UNITY_EDITOR
-			iOS.SetClipboard(value);
-#elif UINITY_ANDROID && !UNITY_EDITOR
-			AndroidClipboardHelper.SetClipboard (value);
-#else
-			PC.Clipboard = value;
-#endif
+			Debug.Log ("Set clipboard value " + value);
+
+			if (Application.platform == RuntimePlatform.IPhonePlayer)
+				iOS.SetClipboard(value);
+			else if (Application.platform == RuntimePlatform.Android)
+				AndroidClipboardHelper.SetClipboard (value);
+			else
+				PC.Clipboard = value;
 		}
 
 		get
 		{
-#if UNITY_IOS && !UNITY_EDITOR
-			return iOS.GetClipboard();
-#elif UINITY_ANDROID && !UNITY_EDITOR
-			return AndroidClipboardHelper.GetClipboard ();
-#else
-			return PC.Clipboard;
-#endif
+			if (Application.platform == RuntimePlatform.IPhonePlayer)
+				return iOS.GetClipboard();
+			else if (Application.platform == RuntimePlatform.Android)
+				return AndroidClipboardHelper.GetClipboard ();
+			else
+				return PC.Clipboard;
 		}
 	}
 }
