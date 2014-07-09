@@ -2,22 +2,20 @@
 
 namespace ClipboardHelper
 {
-	internal class AndroidClipboardHelper
+	internal class AndroidClipboardHelper : IClipboardHelper
 	{
 		private const string PLUGIN_NAME = "com.pp.textClipboard.ClipboardAndroid";
 
-		public static void SetClipboard (string exportData)	
+		public void SetClipboard (string exportData)	
 		{
 			if (Application.platform == RuntimePlatform.Android) 
 			{
 				AndroidJavaClass jc = new AndroidJavaClass (PLUGIN_NAME);
 				jc.CallStatic ("SetCopyBufferString", exportData);
-				Debug.Log ("Set clipboard text " + exportData);
-				Debug.Log ("Java Class is null? " + (jc == null));
 			}
 		}
 
-		public static string GetClipboard ()
+		public string GetClipboard ()
 		{
 			string retText = "";
 			if (Application.platform == RuntimePlatform.Android) 

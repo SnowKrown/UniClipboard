@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace ClipboardHelper
 {
-	internal static class iOS
+	internal class iOSClipboardHelper : IClipboardHelper
 	{
 	    [DllImport("__Internal")]
 	    private static extern void _SetClipboard(string value);
@@ -12,12 +12,12 @@ namespace ClipboardHelper
 	    [DllImport("__Internal")]
 	    private static extern string _GetClipboard();
 
-		public static void SetClipboard(string value)
+		public void SetClipboard(string value)
 		{
 			_SetClipboard(value);
 		}
 
-		public static string GetClipboard()
+		public string GetClipboard()
 		{
 			return _GetClipboard();
 		}
