@@ -1,5 +1,5 @@
 {
-	"group": "UniClipboard",
+	"group": "TextClipboard",
 	"libs": [],
 	"frameworks": ["Accounts.framework", "Social.framework"],
 	"headerpaths": [],

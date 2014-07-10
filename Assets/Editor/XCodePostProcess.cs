@@ -16,20 +16,18 @@ namespace UniClipboard
 		{
 			var project = new UnityEditor.XCodeEditor.XCProject(path);
 
-			// find current path
-			string[] files = Directory.GetFiles(Application.dataPath, "UniClipboard.cs", SearchOption.AllDirectories);
+			string[] files = Directory.GetFiles (Application.dataPath, "TextClipboard.cs", SearchOption.AllDirectories);
 
-			// apply projmods
-			var projmodsPath = Path.Combine(Path.GetDirectoryName(files[0]), "Editor/uniclipboard.projmods");
+			var projmodsPath = Path.Combine(Path.GetDirectoryName(files[0]), "Editor/textClipboard.projmods");
+
 			project.ApplyMod(projmodsPath);
-
-			// add compile flag
 			List<string> targetGuids = new List<string>();
-			targetGuids.Add(project.GetFile("uniclipboard.mm").guid);
+			targetGuids.Add(project.GetFile("TextClipboardIOS.mm").guid);
 
 			foreach(var file in project.buildFiles)
 			{
-				if(!targetGuids.Contains((string)file.Value.data["fileRef"])) continue;
+				if(!targetGuids.Contains((string)file.Value.data["fileRef"])) 
+					continue;
 				file.Value.AddCompilerFlag("-fobjc-arc");
 			}
 

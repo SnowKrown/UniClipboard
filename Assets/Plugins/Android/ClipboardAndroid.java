@@ -1,20 +1,15 @@
 package com.pp.textClipboard;
 
-import java.util.logging.Logger;
-
 import android.app.Activity;
 import android.content.Context;
-import android.content.ClipboardManager;
 import android.content.ClipData;
 import android.os.Bundle;
-import android.util.Log;
-
-import com.fuuzu.meat.UnityPlayerNativeActivity;
-import com.unity3d.player.UnityPlayer;
+import com.SnowKrown.TextClipboard.UnityPlayerNativeActivity;
 
 public class ClipboardAndroid extends UnityPlayerNativeActivity
 {
 	public static ClipboardAndroid myInstance;
+	
 	public static ClipboardAndroid shared()
 	{
 		if(myInstance == null)
@@ -22,23 +17,23 @@ public class ClipboardAndroid extends UnityPlayerNativeActivity
 		return myInstance;
 	}
 	
-	protected void onCreate(Bundle savedInstanceState) 
+	protected void onCreate(Bundle savedInstanceState)
 	{
 	    super.onCreate(savedInstanceState);
 	    myInstance = new ClipboardAndroid();
-	  }
+    }
 	
     static protected void runSafe (final Runnable r)
 	{
 		com.unity3d.player.UnityPlayer.currentActivity.runOnUiThread (new Runnable()
-        {
+                                                                      {
 			@Override
 			public void run()
 			{
 				try
 				{
 					r.run();
-				} 
+				}
 				catch (Exception e)
 				{
 					
@@ -47,16 +42,16 @@ public class ClipboardAndroid extends UnityPlayerNativeActivity
 			}
 		});
 	}
-
     
-	public String GetCopyBufferString () 
+    
+	public String GetCopyBufferString ()
 	{
 		String retText = "";
 		final Activity activty = com.unity3d.player.UnityPlayer.currentActivity;
 		android.content.ClipboardManager clipboard = (android.content.ClipboardManager) activty.getSystemService(Context.CLIPBOARD_SERVICE);
-		ClipData clip = clipboard.getPrimaryClip();	
-
-		if (clip != null && clip.getItemCount() > 0) 
+		ClipData clip = clipboard.getPrimaryClip();
+        
+		if (clip != null && clip.getItemCount() > 0)
 		{
 			ClipData.Item item = clip.getItemAt(0);
 			retText = item.getText ().toString ();
@@ -64,11 +59,11 @@ public class ClipboardAndroid extends UnityPlayerNativeActivity
 		
 		return retText;
 	}
-
-	static public void SetCopyBufferString (final String text) 
+    
+	static public void SetCopyBufferString (final String text)
 	{
 		runSafe(new Runnable()
-		{
+                {
 			@Override
 			public void run()
 			{
